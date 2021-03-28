@@ -9,18 +9,22 @@ def test_aa():
 def add(a, b) -> int:
     return a + b
 
+
 @pytest.mark.demo
-def test_add():
-    assert 5 == add(2, 3)
+@pytest.mark.parametrize('a', [1, 2, 3], ids=['a', 'b', 'c'])
+@pytest.mark.parametrize('b', [1, 2, 3], ids=['d','e','f'])
+def test_add(a, b):
+    print(f"测试参数堆叠组合:a->{a},b->{b}")
+
 
 @pytest.mark.smoke
-@pytest.mark.parametrize('a,b', [
-    (2, 3),
-    (1, 4),
-    (1, 5)
-])
-def test_add2(a, b):
-    assert 5 == add(a, b)
+@pytest.mark.parametrize('a,b,expected', [
+    (2, 3, 5),
+    (1, 4, 5),
+    (1, 5, 6)
+], ids=['int', 'int2', 'int3'])
+def test_add2(a, b, expected):
+    assert expected == add(a, b)
 
 
 class TestDemo:
@@ -32,6 +36,7 @@ class TestDemo:
 def login():
     username = "xiaoming"
     return username
+
 
 @pytest.mark.skip
 class TestLogin:
